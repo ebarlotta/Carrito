@@ -96,6 +96,23 @@
                 });
             }
         });
+
+        $(".update-cart").click(function (e) {
+            e.preventDefault();
+ 
+            var ele = $(this);
+ 
+            if(confirm("Actualizaste los datos del producto?")) {
+                /*$.ajax({
+                    url: '{{ url('remove-from-cart') }}',
+                    method: "PUT",
+                    data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
+                    success: function (response) {
+                        window.location.reload();
+                    }
+                });*/
+            }
+        });
  
     </script>
  

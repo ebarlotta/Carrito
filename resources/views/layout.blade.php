@@ -18,6 +18,11 @@
 <body>
  
 <div class="container">
+    @if (session('success'))
+        <div class="alert alert-success" ng_model="success">
+            {{ session('success') }}
+        </div>
+    @endif
  
     <div class="row">
         <div class="col-lg-12 col-sm-12 col-12 main-section">

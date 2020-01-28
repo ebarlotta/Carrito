@@ -4,8 +4,6 @@
  
 @section('content')
  
-    <div class="container products">
- 
         <div class="row">
  
             @foreach($products as $product)
@@ -15,15 +13,14 @@
                         <div class="caption">
                             <h4>{{ $product->name }}</h4>
                             <p>{{ strtolower($product->description) }}</p>
-                            <p><strong>Price: </strong> {{ $product->price }}$</p>
+                            <p><strong>Precio: </strong> {{ $product->price }}$</p>
                             <p class="btn-holder"><a href="{{ url('add-to-cart/'.$product->id) }}" class="btn btn-warning btn-block text-center" role="button">Agregar a Carrito</a> </p>
                         </div>
                     </div>
                 </div>
             @endforeach
- 
         </div><!-- End row -->
- 
+        {{ $products->links() }}
     </div>
  
 @endsection

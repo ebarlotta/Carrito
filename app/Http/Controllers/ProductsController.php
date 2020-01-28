@@ -9,7 +9,8 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(3);
+        //$products = Product::all()->paginate(15);
         return view('products', compact('products'));
     }
  
@@ -17,6 +18,9 @@ class ProductsController extends Controller
     {
         return view('cart');
     }
+
+    
+
 
     public function addToCart($id)
     {
