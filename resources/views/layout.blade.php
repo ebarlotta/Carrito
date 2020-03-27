@@ -15,7 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
  
 </head>
-<body>
+<body style="background-color:black;">
  
 <div class="container">
     @if (session('success'))
@@ -23,12 +23,12 @@
             {{ session('success') }}
         </div>
     @endif
- 
+
     <div class="row">
-        <div class="col-lg-12 col-sm-12 col-12 main-section">
+        <div class="col-lg-12 col-sm-12 col-12 main-section" style="backgroun-color:black;">
             <div class="dropdown">
                 <button type="button" class="btn btn-info" data-toggle="dropdown">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                 </button>
                 <div class="dropdown-menu">
                     <div class="row total-header-section">
@@ -50,7 +50,7 @@
                         @foreach(session('cart') as $id => $details)
                             <div class="row cart-detail">
                                 <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                    <img src="{{ $details['photo'] }}" />
+                                    <img src="{{ asset('images/' . $details['photo']) }}" />
                                 </div>
                                 <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                     <p>{{ $details['name'] }}</p>
@@ -62,6 +62,25 @@
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
                             <a href="{{ url('cart') }}" class="btn btn-primary btn-block">Ver Todos</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--<div class="BotonVolver form-group col-md-2">
+	                <a href="{{ route('product')}}" class="btn btn-info"><i class="fa fa-remove"></i></a>
+                </div>-->
+            </div>
+            <div class="dropdown">
+               <button type="button" class="btn btn-info" data-toggle="dropdown">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Productos
+                </button>
+                <div class="dropdown-menu">
+                    <div class="row total-header-section">
+                        <div class="col-lg-6 col-sm-6 col-6">
+                            <a href="{{ route('AddProduct') }}" class="btn btn-primary btn-block">Agregar Producto</a>
+                            <a href="{{ route('product') }}" class="btn btn-primary btn-block">Lista de Producto</a>
+                            <a href="{{ route('index') }}" class="btn btn-primary btn-block">Ir a Comprar</a>
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                         </div>
                     </div>
                 </div>

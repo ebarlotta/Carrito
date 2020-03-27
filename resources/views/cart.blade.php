@@ -4,7 +4,7 @@
  
 @section('content')
  
-    <table id="cart" class="table table-hover table-condensed">
+    <table id="cart" class="table table-hover table-condensed" style="background-color:dark; color:burlywood;">
         <thead>
         <tr>
             <th style="width:50%">Producto</th>
@@ -22,16 +22,19 @@
             @foreach(session('cart') as $id => $details)
  
                 <?php $total += $details['price'] * $details['quantity'] ?>
- 
+
                 <tr>
                     <td data-th="Product">
                         <div class="row">
-                            <div class="col-sm-3 hidden-xs"><img src="{{ $details['photo'] }}" width="100" height="100" class="img-responsive"/></div>
+                            <div class="col-sm-3 hidden-xs">
+                                <img src="{{ asset('images/' . $details['photo']) }}" width="100" height="100" class="img-responsive"/>
+                            </div>
                             <div class="col-sm-9">
-                                <h4 class="nomargin">{{ $details['name'] }}</h4>
+                                <h4 class="nomargin" style="font-size:1.3em;word-wrap: break-word;">{{ $details['name'] }}</h4>
                             </div>
                         </div>
                     </td>
+                    
                     <td data-th="Price">${{ $details['price'] }}</td>
                     <td data-th="Quantity">
                         <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity" />
@@ -52,12 +55,35 @@
         </tr>
         <tr>
             <td><a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continuar Comprando</a></td>
+            <td>
+            <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post"> -->
+
+                <!-- Identify your business so that you can collect the payments. -->
+                <!--<input type="hidden" name="business" value="enzobarlotta@gmail.com">-->
+
+                <!-- Specify a Buy Now button. -->
+                <!--<input type="hidden" name="cmd" value="_xclick">-->
+
+                <!-- Specify details about the item that buyers will purchase. -->
+                <!--<input type="hidden" name="item_name" value="Hot Sauce-12oz. Bottle">
+                <input type="hidden" name="amount" value="5.95">
+                <input type="hidden" name="currency_code" value="USD">-->
+
+                <!-- Display the payment button. -->
+                <!--<input type="image" name="submit" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="Comprar Ahora">
+                <img alt="" border="0" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
+            </form>-->
+            <!--<script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+<script>paypal.Buttons().render('body');</script>-->
+            
+            <a href="{{ route('payment') }}" class="btn btn-success">PAGAR</a>
+
+            </td>
             <td colspan="2" class="hidden-xs"></td>
             <td class="hidden-xs text-center"><strong>Total ${{ $total }}</strong></td>
         </tr>
         </tfoot>
     </table>
- 
 @endsection
 
 

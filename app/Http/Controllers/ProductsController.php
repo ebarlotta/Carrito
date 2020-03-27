@@ -9,18 +9,80 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(3);
-        //$products = Product::all()->paginate(15);
+        $products = Product::paginate(4);
         return view('products', compact('products'));
     }
- 
+
+    public function ListarProductos()
+    {
+        $products = Product::paginate(7);
+        return view('productList', compact('products'));
+    }
+
+    public function create(request $Request) {
+        
+        $producto = new Product;
+        $producto->name = $Request->name;
+        $producto->description = $Request->description;
+        $producto->price = $Request->price;
+        $producto->quantity = $Request->quantity;
+
+//        $producto->photo  = $Request->imgProducto;
+        
+        if($Request->hasFile('imgProducto')) {
+            $file=$Request->file('imgProducto');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path().'/images/',$name);
+        }
+
+        $producto->photo = $name;
+        $producto->save();
+
+        return redirect('product')->with('success', 'Producto agregado');
+    }
+
+    public function add(){
+        return view('addProduct');
+    }
+
+    public function delete($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect('product')->with('success', 'Post is deleted!');
+    }
+
+    public function modify($id)
+    {
+        $producto = Product::findOrFail($id);
+        return view('updateProduct',compact('producto'));
+    }
+    
+    public function updateProd(request $Request)
+    {
+        $producto = Product::findOrFail($Request->id);
+        $producto->name = $Request->name;
+        $producto->description = $Request->description;
+        $producto->price = $Request->price;
+
+        //$producto->photo = $Request->photo; //Carga el nombre del archivo original
+
+        if($Request->hasFile('imgProducto')) {  //Si ha sido modificado el campo, entonces carga un nuevo archivo
+            $file=$Request->file('imgProducto');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path().'/images/',$name);
+            $producto->photo = $name;
+        }
+
+        $producto->update();
+        return redirect('product')->with('success', 'Producto Actualizado!');
+        
+    }
+
     public function cart()
     {
         return view('cart');
     }
-
-    
-
 
     public function addToCart($id)
     {
