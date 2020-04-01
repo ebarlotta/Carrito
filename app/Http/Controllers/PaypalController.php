@@ -162,6 +162,8 @@ class PaypalController extends Controller
         if($result->getState() == 'approved') {
 
             //TOMAR INFORMACION DE LA VENTA Y GUARDA EN LA BASE DE DATOS
+            $this->saveOrder();
+            \session::forget('cart');
 
             return \Redirect::route('cart')
             ->with('success', 'Compra realizada de forma correcta');
@@ -169,5 +171,31 @@ class PaypalController extends Controller
         }
         return \Redirect::route('cart')
         ->with('success','La compra fue cancelada!');
+    }
+
+    protected function saveOrder() {
+        $subtotal=0;
+        $cart = \session::get('cart');
+
+        foreach($cart as $producto) {
+            $subtotal += $producto->quantity * $producto->price;
+        }
+        $order = Order::create([
+            'subtotal'=>$subtotal,
+            'shipping'=>0,
+            'user_id'=>\Auth::user()
+        ]);
+        foreach($cart as $producto) {
+            $this->saveOrderItem($producto,$order->id);
+        }
+    }
+
+    protected function saveOrderItem($producto,$order_id) {
+        OrderItem::create([
+            'price'=>$producto->price,
+            'quantity'=>$producto->quantity,
+            'product_id'=>$producto->id,
+            'order_id'=>$producto->order_id
+        ]);
     }
 }

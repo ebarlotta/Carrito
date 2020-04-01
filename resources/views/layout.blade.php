@@ -85,6 +85,29 @@
                     </div>
                 </div>
             </div>
+                <!-- start filtro -->
+                <div class="dropdown">
+                    <form action="{{ route('FiltrarProductos') }}">
+                        <div class="form-group">    
+                            Filtrar por producto
+                            <input type="text" class="btn btn-text" name="filtro" size=30 style="background-color:darkslategray;color:blanchedalmond">
+                            <button type="submit" class="btn btn-info">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            <div class="dropdown-menu">
+                     <div class="row total-header-section">
+                         <div class="col-lg-6 col-sm-6 col-6">
+                             <a href="{{ route('AddProduct') }}" class="btn btn-primary btn-block">Agregar Producto</a>
+                             <a href="{{ route('product') }}" class="btn btn-primary btn-block">Lista de Producto</a>
+                             <a href="{{ route('index') }}" class="btn btn-primary btn-block">Ir a Comprar</a>
+                             <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                         </div>
+                     </div>
+                 </div>
+             </div> <!-- end filtro -->
+
         </div>
     </div>
 </div>

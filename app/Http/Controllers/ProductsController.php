@@ -9,7 +9,22 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(4);
+        $products = Product::OrderBy('name','ASC')
+            ->paginate(4); 
+        return view('products', compact('products'));
+    }
+
+    public function FiltrarProductos(request $Request) {
+        if($Request->filtro) { 
+            $name=$Request->filtro;
+            $products = Product::OrderBy('name','ASC')
+                ->where('name','like',"%$name%")
+                ->paginate(4); 
+        }
+        else {
+            $products = Product::OrderBy('name','ASC')
+                ->paginate(4);
+        }
         return view('products', compact('products'));
     }
 
