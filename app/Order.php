@@ -8,5 +8,7 @@ class Order extends Model
 {
     protected $table = 'orders';
 
-    protected $filleable=['subtotal','shipping','user_id'];
+    protected $fillable=['subtotal','shipping','user_id'];
+
+
 }

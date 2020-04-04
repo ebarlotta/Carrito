@@ -13,7 +13,7 @@
             @foreach($products as $product)
                 <div class="col-xs-18 col-sm-6 col-md-3">
                     <div class="thumbnail" style="color:burlywood">
-                        <img src="{{ asset('images/' . $product->photo) }}" width="500" height="300">
+                        <img src="{{ asset('images/' . $product->photo) }}" width="350" height="200">
                         <div class="caption">
                             <h4>{{ $product->name }}</h4>
                             <p>{{ strtolower($product->description) }}</p>

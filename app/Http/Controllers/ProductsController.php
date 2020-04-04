@@ -41,8 +41,6 @@ class ProductsController extends Controller
         $producto->description = $Request->description;
         $producto->price = $Request->price;
         $producto->quantity = $Request->quantity;
-
-//        $producto->photo  = $Request->imgProducto;
         
         if($Request->hasFile('imgProducto')) {
             $file=$Request->file('imgProducto');
@@ -114,6 +112,7 @@ class ProductsController extends Controller
     
             $cart = [
                     $id => [
+                        "id"=>$product->id,
                         "name" => $product->name,
                         "quantity" => 1,
                         "price" => $product->price,
@@ -122,7 +121,7 @@ class ProductsController extends Controller
             ];
     
             session()->put('cart', $cart);
-    
+
             return redirect()->back()->with('success', 'Producto agregado al carrito correctamente!');
         }
     
@@ -139,6 +138,7 @@ class ProductsController extends Controller
     
         // if item not exist in cart then add to cart with quantity = 1
         $cart[$id] = [
+            "id"=>$product->id,
             "name" => $product->name,
             "quantity" => 1,
             "price" => $product->price,

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\UrlGenerator;
+use App\Product;
+use App\Order;
+use App\OrderItem;
 
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
@@ -164,8 +167,8 @@ class PaypalController extends Controller
             //TOMAR INFORMACION DE LA VENTA Y GUARDA EN LA BASE DE DATOS
             $this->saveOrder();
             \session::forget('cart');
-
-            return \Redirect::route('cart')
+            //return \Redirect::route('cart')
+            return \Redirect::route('index')
             ->with('success', 'Compra realizada de forma correcta');
             //->with('message','Compra realizada de forma correcta');
         }
@@ -175,27 +178,36 @@ class PaypalController extends Controller
 
     protected function saveOrder() {
         $subtotal=0;
-        $cart = \session::get('cart');
+
+        $cart = session()->get('cart');
+
+        //$cart = session('cart');
+        //$cart = \session::get('cart');
 
         foreach($cart as $producto) {
-            $subtotal += $producto->quantity * $producto->price;
+            $subtotal += $producto['quantity'] * $producto['price'];
         }
+        //dd(\Auth::user());
+        //dd(Auth);
         $order = Order::create([
             'subtotal'=>$subtotal,
             'shipping'=>0,
-            'user_id'=>\Auth::user()
-        ]);
+            'user_id'=>auth()->user()->id
+        ]); //'user_id'=>Auth()->get('user')
+        // \Auth::user()
+        
         foreach($cart as $producto) {
-            $this->saveOrderItem($producto,$order->id);
+            $this->saveOrderItem($producto,$order['id']);
         }
     }
 
     protected function saveOrderItem($producto,$order_id) {
         OrderItem::create([
-            'price'=>$producto->price,
-            'quantity'=>$producto->quantity,
-            'product_id'=>$producto->id,
-            'order_id'=>$producto->order_id
-        ]);
+            'price'=>$producto['price'],
+            'product_id'=>$producto['id'],
+            'order_id'=>$order_id,
+            'quantity'=>$producto['quantity']
+        ]);  
+
     }
 }
