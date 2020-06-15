@@ -13,7 +13,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
- 
+    <script>
+    @media (min-width: 576px) {
+        .col-sm-1 {
+            flex: 0 0 100%; !important
+            max-width: 100%; !important
+        }
+    }
+    </script>
 </head>
 <body style="background-color:black;">
  
@@ -54,7 +61,7 @@
                                 </div>
                                 <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                     <p>{{ $details['name'] }}</p>
-                                    <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
+                                    <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count"> Cantidad:{{ $details['quantity'] }}</span>
                                 </div>
                             </div>
                         @endforeach
@@ -78,7 +85,7 @@
                     <div class="row total-header-section">
                         <div class="col-lg-6 col-sm-6 col-6">
                             <a href="{{ route('AddProduct') }}" class="btn btn-primary btn-block">Agregar Producto</a>
-                            <a href="{{ route('product') }}" class="btn btn-primary btn-block">Lista de Producto</a>
+                            <a href="{{ route('product') }}" class="btn btn-primary btn-block">Mis Productos</a>
                             <a href="{{ route('index') }}" class="btn btn-primary btn-block">Ir a Comprar</a>
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                         </div>
@@ -86,6 +93,7 @@
                 </div>
             </div>
                 <!-- start filtro -->
+                
                 <div class="dropdown">
                     <form action="{{ route('FiltrarProductos') }}">
                         <div class="form-group">    
@@ -106,7 +114,16 @@
                          </div>
                      </div>
                  </div>
+                 <div class="dropdown">
+                    <form">
+                        <div class="form-group" style="color:white;">    
+                        Bienvenido: <label for=""  value="{{ auth()->user()->name }}">{{ auth()->user()->name }}</label>
+                         </div>
+                    </form>
+                </div>
+
              </div> <!-- end filtro -->
+
 
         </div>
     </div>

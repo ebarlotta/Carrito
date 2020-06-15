@@ -29,7 +29,7 @@
                             <div class="col-sm-3 hidden-xs">
                                 <img src="{{ asset('images/' . $details['photo']) }}" width="100" height="100" class="img-responsive"/>
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-xl-9">
                                 <h4 class="nomargin" style="font-size:1.3em;word-wrap: break-word;">{{ $details['name'] }}</h4>
                             </div>
                         </div>

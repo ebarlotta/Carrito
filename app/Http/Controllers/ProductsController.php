@@ -10,7 +10,7 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::OrderBy('name','ASC')
-            ->paginate(4); 
+            ->paginate(6); 
         return view('products', compact('products'));
     }
 
@@ -19,18 +19,19 @@ class ProductsController extends Controller
             $name=$Request->filtro;
             $products = Product::OrderBy('name','ASC')
                 ->where('name','like',"%$name%")
-                ->paginate(4); 
+                ->paginate(6); 
         }
         else {
             $products = Product::OrderBy('name','ASC')
-                ->paginate(4);
+                ->paginate(6);
         }
         return view('products', compact('products'));
     }
 
     public function ListarProductos()
     {
-        $products = Product::paginate(7);
+        $products = Product::where('user_id',auth()->user()->id)
+            ->paginate(7);
         return view('productList', compact('products'));
     }
 
@@ -49,6 +50,7 @@ class ProductsController extends Controller
         }
 
         $producto->photo = $name;
+        $producto->user_id = auth()->user()->id;
         $producto->save();
 
         return redirect('product')->with('success', 'Producto agregado');
